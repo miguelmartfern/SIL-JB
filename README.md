@@ -1,3 +1,5 @@
+Docs: https://mystmd.org/guide
+
 ## Install 
 
 Unsing Conda:
