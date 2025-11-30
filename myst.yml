@@ -5,10 +5,10 @@ project:
   title: Sistemas Lineales
   # description:
   # keywords: []
-  # authors: 
-  #   - name: Colaborador 1
-  #     orcid: 0000-0000-0000-0000
-  #     affiliation: Universidad de Valladolid
+  authors: 
+    - name: Colaborador 1
+      orcid: 0000-0000-0000-0000
+      affiliation: Universidad de Valladolid
   #   - name: Colaborador 2
   #     affiliation: Universidad de Valladolid
   #   - name: Colaborador 3
@@ -25,7 +25,7 @@ project:
     - file: content/002-tema0.ipynb
     - file: content/100-tema1.ipynb
       children:
-        - file: 1content/01.ipynb
+        - file: content/101.ipynb
         - file: content/102.ipynb
         - file: content/103.ipynb
         - file: content/104.ipynb
@@ -33,10 +33,9 @@ project:
   exports:
     - format: pdf
       date: 1 Jan 2026
-      template: lapreprint #plain_latex_book 
+      template: my_latex_book #plain_latex_book #lapreprint 
       output: exports/sistemas_lineales.pdf
       articles: 
-        - content/001-index.ipynb
         - content/002-tema0.ipynb
         - content/100-tema1.ipynb
         # - content/101.ipynb
