@@ -32,19 +32,31 @@
 %	HEADING LEVEL REMAPPING
 %----------------------------------------------------------------------------------------
 % Remap MyST heading levels to book-style hierarchy:
-% #      → \chapter
-% ##     → \section
-% ###    → \subsection
+% MyST:
+%   #   -> \section
+%   ##  -> \subsection
+%   ### -> \subsubsection
+%
+% We want:
+%   #   -> chapter
+%   ##  -> section
+%   ### -> subsection
 
-% Keep originals just in case
-{% comment %} \let\myst@orig@section\section
-\let\myst@orig@subsection\subsection
-\let\myst@orig@subsubsection\subsubsection {% endcomment %}
+% Save the original sectioning commands
+\let\OrigSection\section
+\let\OrigSubsection\subsection
+\let\OrigSubsubsection\subsubsection
 
-% Now remap: what myst-to-tex *calls* \section becomes a chapter, etc.
+% 1st level: behave like chapter
 \renewcommand{\section}{\chapter}
-\renewcommand{\subsection}{\section}
-\renewcommand{\subsubsection}{\subsection}
+
+% 2nd level: behave like *original* section
+\renewcommand{\subsection}{\OrigSection}
+
+% 3rd level: behave like *original* subsection
+\renewcommand{\subsubsection}{\OrigSubsection}
+
+
 
 
 %----------------------------------------------------------------------------------------
