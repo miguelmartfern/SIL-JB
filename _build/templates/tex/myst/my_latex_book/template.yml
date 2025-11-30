@@ -1,0 +1,57 @@
+myst: v1
+title: My LaTeX Book
+description: A latex book theme based on Legrand Orange book template
+version: '1.0.0'
+authors:
+  - name: biagio Mandracchia
+    website: https://bmandracchia.github.io
+    affiliations:
+      - University of Valladolid
+license: CC-BY-4.0
+thumbnail: ./thumbnail.png
+tags:
+  - book
+# parts:
+#   - id: acknowledgments
+#     description: >
+#       Add an acknowledgments to your book
+doc:
+  - id: title
+    required: true
+  - id: subtitle
+  - id: authors
+    required: true
+  # - id: keywords
+  #   description: |
+  #     Include a list of keywords after the abstract (minimum 3)
+  - id: bibliography
+# options:
+#   - id: double_spacing
+#     title: Double line spacing
+#     type: boolean
+#     description: Enable double line spacing
+#     default: false
+files:
+  - template.tex
+  - LegrandOrangeBook.cls
+  - Images/orange1.jpg
+  - Images/orange2.jpg
+  - Images/orange3.jpg
+  - Images/creodocs_logo.pdf
+  - Images/background.pdf
+packages:
+  - babel
+  - caption
+  - enumitem
+  - fontenc
+  - framed
+  - geometry
+  - graphicx
+  - hyperref
+  - inputenc
+  - lmodern
+  - natbib
+  - xcolor
+  - changepage
+  - amssymb
+  - tikz
