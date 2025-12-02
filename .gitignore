@@ -1,3 +1,5 @@
 .ipynb_checkpoints
 _build/temp
 _build/logs
+_build/site
+_build/templates/site
