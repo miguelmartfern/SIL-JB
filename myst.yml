@@ -30,6 +30,13 @@ project:
         - file: content/103.ipynb
         - file: content/104.ipynb
         - file: content/105.ipynb
+    - file: content/700-tema7.ipynb
+      children:
+        - file: content/701.ipynb
+        - file: content/702.ipynb
+        - file: content/703.ipynb
+        - file: content/704.ipynb
+        - file: content/705.ipynb
       
   exports:
     - format: pdf
