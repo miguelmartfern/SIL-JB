@@ -51,6 +51,12 @@ project:
         - content/103.ipynb
         - content/104.ipynb
         - content/105.ipynb
+        - content/700-tema1.ipynb
+        - content/701.ipynb
+        - content/702.ipynb
+        - content/703.ipynb
+        - content/704.ipynb
+        - content/705.ipynb
       title: Sistemas Lineales
       subtitle: Apuntes para el curso de Sistemas Lineales
       logo: "site_logo.png"
