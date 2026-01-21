@@ -3,3 +3,6 @@ _build/temp
 _build/logs
 _build/site
 _build/templates/site
+
+# MyST build outputs
+_build

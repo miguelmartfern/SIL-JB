@@ -30,6 +30,10 @@ project:
         - file: content/103.ipynb
         - file: content/104.ipynb
         - file: content/105.ipynb
+    - file: content/300.ipynb
+    - file: content/301-tema3.ipynb
+      children:
+        - file: content/302.ipynb
     - file: content/700-tema7.ipynb
       children:
         - file: content/701.ipynb
@@ -51,7 +55,7 @@ project:
         - content/103.ipynb
         - content/104.ipynb
         - content/105.ipynb
-        - content/700-tema1.ipynb
+        - content/700-tema7.ipynb
         - content/701.ipynb
         - content/702.ipynb
         - content/703.ipynb
