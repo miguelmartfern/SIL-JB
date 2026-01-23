@@ -55,6 +55,8 @@ project:
         - content/103.ipynb
         - content/104.ipynb
         - content/105.ipynb
+        - content/300.ipynb
+        - content/301-tema3.ipynb
         - content/700-tema7.ipynb
         - content/701.ipynb
         - content/702.ipynb
