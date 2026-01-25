@@ -37,6 +37,7 @@ project:
           children:
             - file: content/321.ipynb
             - file: content/322.ipynb
+            - file: content/323.ipynb
     - file: content/700-tema7.ipynb
       children:
         - file: content/701.ipynb
