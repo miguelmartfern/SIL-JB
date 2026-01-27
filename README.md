@@ -189,6 +189,46 @@ toc:
       - file: your_new_page-2
 ```
 
+## Crear ejes de figuras en Bokeh
+
+Poner al principio del notebook en un bloque de código:
+
+```python
+%load_ext autoreload
+%autoreload 2
+
+import sys
+import os
+sys.path.append(os.path.abspath(".."))
+
+from utils.plot_helpers import style_math_axes
+```
+
+Creación de la gráfica:
+
+```python
+p_main = figure(height=400, width=450, tools="pan,wheel_zoom,reset",
+                title="Título de la figura")
+```
+
+Creación de ejes con formato Oppenheim:
+
+```python
+# RANGOS REAL DE SEÑAL (Sin márgenes)
+# Tu señal va de -1.0 a 2.4 en X
+# Y va de aprox -1.3 a 1.3 en Y 
+X_DATA_RANGE = (-1.0, 2.4) 
+Y_DATA_RANGE = (-1.3, 1.3)
+
+style_math_axes(p_main, 
+                x_range=X_DATA_RANGE, 
+                y_range=Y_DATA_RANGE, 
+                prolong_axes=[0.1, 0.1], # Margen dentro de ejes sin señal [0.0-1.0]
+                margins=[0, 0, 0, 0.05], # Margen fuera de ejes [0.0-1.0]
+                xlabel="t", 
+                ylabel=r"$$\tilde{x}_N(t)$$")
+ ```
+
 ## Más documentación
 
 * Guía y sintaxis de MyST: [https://mystmd.org/guide](https://mystmd.org/guide)
