@@ -1,15 +1,18 @@
 # SIL-JB/utils/plot_helpers.py
 
-from bokeh.models import Arrow, NormalHead, VeeHead, Label
+import numpy as np
+from bokeh.plotting import figure, show
+from bokeh.layouts import column, row
+from bokeh.models import Arrow, NormalHead, VeeHead, ColumnDataSource, CustomJS, Slider, RadioButtonGroup, Label
+from bokeh.io import output_notebook
 
-def style_math_axes(p, x_range, y_range, prolong_axes=[0.1, 0.1], margins=[0, 0, 0, 0.05], xlabel="t", ylabel=r"$$\tilde{x}(t)$$"):
+def style_math_axes(p, x_range, y_range, prolong_axes=[0.05, 0.05], margins=[0, 0, 0, 0.05], xlabel="t", ylabel=r"$$\tilde{x}(t)$$"):
     """
     Replica EXACTAMENTE el estilo 'setup_axes' de tu librería Matplotlib.
     
     Lógica portada:
     - prolong_axes: fracción de margen extra a añadir a los ejes.
     - margins: [left, right, bottom, top] en proporción al rango.
-    - Margen Y: 20% abajo, 32% arriba (1.6 * 0.2).
     - Flechas: Cruzan TODA la ventana visual (de límite a límite).
     - Grosor: 1.5 pt.
     """
@@ -25,7 +28,7 @@ def style_math_axes(p, x_range, y_range, prolong_axes=[0.1, 0.1], margins=[0, 0,
     
     y0, y1 = y_range
     span_y = y1 - y0
-    y_margin = (prolong_axes[1] + 0.15) * span_y if span_y > 0 else 1.0 # 20% margen base Y
+    y_margin = (prolong_axes[1] + 0.1) * span_y if span_y > 0 else 1.0 # 20% margen base Y
     # Calculamos los límites VISUALES finales (La "Caja" completa)
     vis_x0 = x0 - x_margin
     vis_x1 = x1 + x_margin
@@ -79,4 +82,38 @@ def style_math_axes(p, x_range, y_range, prolong_axes=[0.1, 0.1], margins=[0, 0,
                        anchor="top_left",
                        x_offset=12, y_offset=-3)) # A la derecha de la flecha
 
+    return p
+
+# ==========================================
+# NUEVA VERSIÓN DE ADD_MATH_TICKS (PIXELS)
+# ==========================================
+def add_math_ticks(p, xticks=None, xtick_labels=None, yticks=None, ytick_labels=None, 
+                   tick_len=10, font_size="10pt"):
+    """
+    Añade ticks usando 'Scatter' para que el tamaño sea en PIXELES (screen units),
+    independiente de la escala de datos.
+    
+    Args:
+        tick_len: Tamaño del tick en píxeles de pantalla (default 10).
+    """
+    # --- EJE X ---
+    if xticks and xtick_labels:
+        # Usamos marker="dash" rotado 90 grados (pi/2) para hacer líneas verticales
+        p.scatter(x=xticks, y=0, marker="dash", angle=np.pi/2, size=tick_len, color="black")
+        
+        for x, label in zip(xticks, xtick_labels):
+            lbl = Label(x=x, y=0, text=label, text_align='center', text_baseline='middle',
+                        y_offset=-15, text_font_size=font_size, text_color="black")
+            p.add_layout(lbl)
+
+    # --- EJE Y ---
+    if yticks and ytick_labels:
+        # Marker "dash" horizontal
+        p.scatter(x=0, y=yticks, marker="dash", angle=0, size=tick_len, color="black")
+        
+        for y, label in zip(yticks, ytick_labels):
+            lbl = Label(x=0, y=y, text=label, text_align='right', text_baseline='middle',
+                        x_offset=-10, text_font_size=font_size, text_color="black")
+            p.add_layout(lbl)
+    
     return p
