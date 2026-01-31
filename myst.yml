@@ -85,6 +85,8 @@ project:
   math:
     # Note the 'single quotes'
     '\SF': '\quad \overset{\text{SF}}{\longrightarrow} \quad'
+    '\sen': '\operatorname{sen}'
+    '\sinc': '\operatorname{sinc}'
     
 site:
   template: book-theme
