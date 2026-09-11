@@ -180,7 +180,7 @@ Borrar la caché y generar los archivos HTML finales:
 
 ```bash
 rm -rf _build
-jupyter-book build --html
+BASE_URL=/SIL-JB jupyter-book build --html
 ```
 
 El resultado final se encontrará en la carpeta de compilación estática (generalmente dentro de `_build/site` o la que se tenga configurada para MyST).
