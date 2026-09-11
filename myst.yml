@@ -15,7 +15,7 @@ project:
   #     affiliation: Universidad de Valladolid
   #   - name: Colaborador 4
   #     affiliation: Universidad de Valladolid
-  github: https://github.com/bmandracchia/SIL-JB
+  github: https://github.com/miguelmartfern/SIL-JB
   license: CC-BY-4.0
   open_access: true
   # To autogenerate a Table of Contents, run "jupyter book init --write-toc"    
