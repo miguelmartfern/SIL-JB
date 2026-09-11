@@ -63,6 +63,10 @@ project:
       children:
         - file: content/how_to_contribute.md
         - file: content/readme_users.md
+    - title: Pruebas
+      children:
+        - file: content/howto_panel.md
+        - file: content/prueba_panel.ipynb
       
   exports:
     - format: pdf
@@ -105,6 +109,10 @@ project:
     '\sen': '\operatorname{sen}'
     '\sinc': '\operatorname{sinc}'
     
+# Para el PID 2026/27 (panel)
+static:
+  - public
+
 site:
   template: book-theme
   parts:
