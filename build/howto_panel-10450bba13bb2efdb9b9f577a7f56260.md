@@ -85,14 +85,18 @@ Abrir el archivo `myst.yml` en la raíz de tu proyecto y asegurarse de que tiene
 version: 1
 project:
   # ... (tus identificadores, título, etc.) ...
-  static:
-    - public
   toc:
     - file: content/001-index.ipynb
     # ... tus otros temas ...
     - title: Herramientas Interactivas
       children:
         - file: content/prueba_panel.ipynb
+static:
+- public
+
+site:
+  template: book-theme
+  # ... opciones del sitio ...
 ```
 
 ### Paso 2.2: Incrustar la App en el Notebook
@@ -176,7 +180,7 @@ Borrar la caché y generar los archivos HTML finales:
 
 ```bash
 rm -rf _build
-jupyter-book build .
+jupyter-book build --html
 ```
 
 El resultado final se encontrará en la carpeta de compilación estática (generalmente dentro de `_build/site` o la que se tenga configurada para MyST).
