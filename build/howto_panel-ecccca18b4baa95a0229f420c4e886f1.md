@@ -25,7 +25,7 @@ mkdir -p public
 
 Crear o editar el script de la aplicación. Para este manual, usaremos el simulador básico de señales en utils/toy_app.py:
 
-```python
+```python   
 # utils/toy_app.py
 import panel as pn
 import bokeh.plotting as bkp
@@ -77,9 +77,10 @@ Verificación: Comprueba que en la carpeta `public/` existen los archivos `toy_a
 
 ### Paso 2.1: Configurar `myst.yml`
 
-Se Debe instruir al motor de compilación para que incluya la carpeta  `public/` en la web generada. Además, el notebook donde se vaya a insertar la app debe estar registrado en el índice (`toc`).
+El notebook donde vayas a insertar la app debe estar registrado en el índice (`toc`).
+Nota Importante: No incluyas la configuración de carpetas estáticas aquí, ya que el copiado de la aplicación se realizará manualmente en la fase de publicación para garantizar su funcionamiento.
 
-Abrir el archivo `myst.yml` en la raíz de tu proyecto y asegurarse de que tiene esta estructura en la sección `project`:
+Abre el archivo `myst.yml` y asegúrate de que tiene esta estructura:
 
 ```yaml
 version: 1
@@ -91,8 +92,6 @@ project:
     - title: Herramientas Interactivas
       children:
         - file: content/prueba_panel.ipynb
-static:
-- public
 
 site:
   template: book-theme
@@ -103,11 +102,11 @@ site:
 
 Abrir el notebook donde se quiere mostrar la aplicación interactiva (ej. `content/prueba_panel.ipynb`). Insertar una celda de tipo **Markdown** y añadir el `iframe`.
 
-**Importante**: Como *MyST* vuelca el contenido de `public/` directamente en la raíz de la web final, la ruta en el atributo `src` debe comenzar con una barra `/`.
+¡Atención a la ruta! Para que la aplicación cargue correctamente tanto en pruebas locales como en la subcarpeta de GitHub Pages (ej. `/SIL-JB/`), debes usar dos puntos y barra (`../`) para subir un nivel en el directorio:
 
 ```html
 <iframe 
-    src="/toy_app.html" 
+    src="../toy_app.html" 
     width="100%" 
     height="450px" 
     frameborder="0"
@@ -146,7 +145,7 @@ Volver a `content/prueba_panel.ipynb` y cambiar temporalmente la ruta del iframe
 En la terminal de trabajo habitual, borrar la caché (para asegurar una compilación limpia) y arrancar el entorno:
 
 ```bash
-rm -rf _build
+jupyter-book clean .
 jupyter-book start
 ```
 
@@ -163,7 +162,7 @@ Abrir `content/prueba_panel.ipynb` y volver a dejar la ruta relativa absoluta pa
 ```html
 <!-- RUTA PARA PRODUCCIÓN / GITHUB PAGES -->
 <iframe 
-    src="/toy_app.html" 
+    src="../toy_app.html" 
     width="100%" 
     height="450px" 
     frameborder="0"
@@ -176,17 +175,43 @@ Guardas el notebook.
 
 ### Paso 4.2: Compilar el sitio estático
 
-Borrar la caché y generar los archivos HTML finales:
+Borrar la caché y generar los archivos HTML finales indicando la ruta del repositorio en GitHub para que los estilos carguen correctamente:
 
 ```bash
-rm -rf _build
+jupyter-book clean .
 BASE_URL=/SIL-JB jupyter-book build --html
+# En PowerShell:
+# $env:BASE_URL="/SIL-JB"; jupyter-book build --html
 ```
 
-El resultado final se encontrará en la carpeta de compilación estática (generalmente dentro de `_build/site` o la que se tenga configurada para MyST).
+### Paso 4.3: Copiar los archivos de la aplicación
+Forzar la copia de los archivos interactivos compilados desde tu carpeta public hacia la carpeta web final (`_build\html`):
 
-### Paso 4.3: Subir a GitHub Pages
+```bash
+Copy-Item -Path "public\*" -Destination "_build\html\" -Recurse
+```
+### Paso 4.4: Despliegue con ghp_import
 
-Dado que GitHub Pages es un servidor estático (como el que se usó en el Paso 3.1), servirá el archivo `/toy_app.html` correctamente y el `iframe` cargará la aplicación.
+Por último, utilizar Python para subir la web compilada directamente a tu repositorio público (origin) en una rama de despliegue específica si se desea (ej. `rama-pruebas-panel-web`).
+Nota: Se usa guion bajo (ghp_import) para que Python reconozca el módulo correctamente.
 
-Utilizar la herramienta preferida (por ejemplo, la acción `gh-pages` de GitHub Actions o la herramienta de línea de comandos `ghp-import`) para enviar el contenido compilado a tu repositorio y publicarlo.
+```bash
+python -m ghp_import -n -p -r origin -b rama-pruebas-panel-web -f _build/html
+```
+
+### Paso 4.5: Activar GitHub Pages en el repositorio (Primer despliegue)
+
+Si es la primera vez que se publica el libro en tu repositorio, se le debe indicar a GitHub que genere y sirva la página web a partir de la rama de despliegue que se acaba de crear. Solo se tendrá que configurar esto una vez:
+
+1. Entrar en la página de tu repositorio en GitHub.
+2. Ir a la pestaña **Settings** (Configuración) en el menú superior.
+3. En la barra lateral izquierda, buscar el apartado *Code and automation* y hacer clic en **Pages**.
+4. En la sección **Build and deployment**, asegurarse de que la opción *Source* está configurada en **Deploy from a branch**.
+5. Justo debajo, en el menú desplegable de *Branch*, seleccionar la rama a la que enviaste los archivos en el Paso 4.4 (por ejemplo, `rama-pruebas-panel-web` o `gh-pages`).
+6. Pulsar el botón **Save**.
+
+*Nota final:* En la pestaña **Actions** del repositorio se podrá ver el progreso del despliegue. Cuando el indicador esté en verde (suele tardar 1 o 2 minutos), el Jupyter Book interactivo estará publicado y accesible de forma pública.
+
+### Paso 4.6: Visualización
+
+Una vez finalizado, acude a las opciones de GitHub Pages en tu repositorio, selecciona el despliegue desde la rama `rama-pruebas-panel-web`, espera unos instantes, y recarga tu web pública con `Ctrl + F5`.
