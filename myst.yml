@@ -110,8 +110,8 @@ project:
     '\sinc': '\operatorname{sinc}'
     
 # Para el PID 2026/27 (panel)
-static:
-  - public
+#static:
+#  - public
 
 site:
   template: book-theme
